@@ -32,6 +32,10 @@ export const Container = styled.div`
       border-bottom: 1px solid #ddd;
       padding: 10px 0;
       margin-bottom: 10px;
+
+      h1{
+        color: ${props => props.theme.text};
+      }
     }
 
     form{
@@ -62,7 +66,8 @@ export const Container = styled.div`
     }
     
     h2 {
-      margin-top: 20px;
+      margin: 20px 5px 0px;
+      color: ${props => props.theme.text};
     }
     .title, .description {
       padding: 10px 20px;

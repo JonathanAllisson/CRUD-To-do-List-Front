@@ -79,7 +79,8 @@ export const Container = styled.div`
             flex: 1;
 
             p, span{
-                font-size: 22px
+                font-size: 22px;
+                color: ${props => props.theme.text};
             }
             span{
                 color: #999;

@@ -5,6 +5,8 @@ import { Container } from './styles';
 export default function Task(props){
 
   const [opSelect, seOptSelect] = useState('');
+  const [Title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   const icons = ['ball', 'beer','bike', 'book', 'car', 'cart', 'game', 'hat', 'home', 'microphone', 'pen', 'run', 'star', 'tool'];
 
@@ -24,6 +26,17 @@ export default function Task(props){
         };
     }, [ref]);
 }
+
+  useEffect(() => {
+    console.log(props.user.name);
+    if(props.user !== null){
+      console.log('N eh null')
+      setTitle(props.user.name);
+      setDescription(props.user.name);
+      console.log(Title);
+      console.log(description);
+    }
+  },[])
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
@@ -50,9 +63,19 @@ export default function Task(props){
           ))}             
           </div>
           <h2>Título:</h2>
-          <input className="title" type="text" placeholder="Titulo da tarefa"/>
+          <input 
+            className="title" 
+            type="text" 
+            placeholder="Titulo da tarefa"
+            onChange={e => setTitle(e.target.value)}
+          />
           <h2>Descrição:</h2>
-          <input className="description" type="text" placeholder="Descrição" />
+          <textarea 
+            className="description" 
+            type="text" 
+            placeholder="Descrição" 
+            onChange={e => setDescription(e.target.value)}
+          />
           <button>Criar</button>
         </form>
       </div>

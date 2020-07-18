@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import api from '../../services/api';
 import DarkModeToggle from 'react-dark-mode-toggle';
 
 import { FaTools, FaGamepad, FaTrash } from 'react-icons/fa'
@@ -11,10 +12,16 @@ import { Container, Screen } from './styles';
 export default function Home({theme, setTheme}){
 
   const [modal, setModal] = useState(false);
+  const [tasks, setTasks] = useState([]);
 
-  const constSetVisibile = () => {
+  useEffect(() => {
+    async function loadTasks(){
+      const listTasks = await api.get('/task');
+      setTasks(listTasks.data);
+    }
 
-  }
+    loadTasks();
+  },[tasks])
 
   return(
     <Screen>
@@ -44,21 +51,28 @@ export default function Home({theme, setTheme}){
                 <FaTrash />
             </div>
           </li>
-          <li className="task">
-            <div className="box">
-                <FaGamepad />    
-            </div>  
-          </li>
-          <li className="task">
-            <div className="box">J</div>
-          </li>
-          <li className="task">
-            <div className="box">D</div>
-          </li>
+          {tasks.map(task => (
+            <li 
+              key={task.id}
+              className="task"  
+            >
+              <div className="box">
+                <img src={require(`../../assets/${task.icon}.svg`)} alt={task.icon}/>
+              </div>
+              <div className="box-content">
+                  <p>{task.title}</p>
+                  <span>{task.created_at}</span>
+              </div>
+              <div className="box-actions">
+                  <FaTools />
+                  <FaTrash />
+              </div>
+            </li>
+          ))}          
         </ul>
     </Container>
     {modal ? (
-      <Task setModal={setModal} />
+      <Task setModal={setModal} user={{name: 'Jonathan'}}/>
     ) : ( 
       null
     )}
