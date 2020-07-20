@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import dateFormat from 'dateformat';
 import api from '../../services/api';
 import DarkModeToggle from 'react-dark-mode-toggle';
 
@@ -13,6 +14,7 @@ export default function Home({theme, setTheme}){
 
   const [modal, setModal] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [taskModal, setTaskModal] = useState(null);
 
   useEffect(() => {
     async function loadTasks(){
@@ -23,6 +25,21 @@ export default function Home({theme, setTheme}){
     loadTasks();
   },[tasks])
 
+
+  function handleUpdate(task){
+    setTaskModal(task);
+    setModal(true);
+  }
+
+  function handleCreate(){
+    setTaskModal(null);
+    setModal(true);
+  }
+
+  async function handleDelete(id){
+    await api.delete(`task${id}`);
+  }
+
   return(
     <Screen>
       <div className="button">
@@ -32,25 +49,14 @@ export default function Home({theme, setTheme}){
           />
       </div>
     <Container>
-      <h1>Todo List</h1>
-      <button onClick={setModal}>
+      <h1>To Do List</h1>
+      <button 
+        className="btn-submit"
+        onClick={() => handleCreate()}>
         <span>Adicionar Task</span>
         <IoIosAdd />
       </button>
         <ul className="task-list">
-          <li className="task">
-            <div className="box">
-                <FaTools />
-            </div>
-            <div className="box-content">
-                <p>Ajustar horários de sono</p>
-                <span>11/07/2020 - 02:53</span>
-            </div>
-            <div className="box-actions">
-                <FaTools />
-                <FaTrash />
-            </div>
-          </li>
           {tasks.map(task => (
             <li 
               key={task.id}
@@ -61,18 +67,18 @@ export default function Home({theme, setTheme}){
               </div>
               <div className="box-content">
                   <p>{task.title}</p>
-                  <span>{task.created_at}</span>
+                  <span>{dateFormat(task.created_at, "dd/mm/yyyy - HH:MM")}</span>
               </div>
               <div className="box-actions">
-                  <FaTools />
-                  <FaTrash />
+                <FaTools onClick={() => handleUpdate(task) }/>
+                <FaTrash onClick={() => handleDelete(task.id)}/>
               </div>
             </li>
           ))}          
         </ul>
     </Container>
     {modal ? (
-      <Task setModal={setModal} user={{name: 'Jonathan'}}/>
+      <Task setModal={setModal} task={taskModal}/>
     ) : ( 
       null
     )}

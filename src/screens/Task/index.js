@@ -1,12 +1,14 @@
 import React, {useState, useEffect, useRef} from 'react';
+import api from '../../services/api';
 
 import { Container } from './styles';
 
 export default function Task(props){
 
-  const [opSelect, seOptSelect] = useState('');
-  const [Title, setTitle] = useState('');
+  const [opSelect, setOptSelect] = useState('');
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [alert, setAlert] = useState(false);
 
   const icons = ['ball', 'beer','bike', 'book', 'car', 'cart', 'game', 'hat', 'home', 'microphone', 'pen', 'run', 'star', 'tool'];
 
@@ -28,18 +30,40 @@ export default function Task(props){
 }
 
   useEffect(() => {
-    console.log(props.user.name);
-    if(props.user !== null){
-      console.log('N eh null')
-      setTitle(props.user.name);
-      setDescription(props.user.name);
-      console.log(Title);
-      console.log(description);
-    }
-  },[])
+    console.log(props.task);
+      if(props.task){
+        setTitle(props.task.title);
+        setDescription(props.task.description);
+        setOptSelect(props.task.icon);
+      }
+  },[]);
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
+
+  async function handleSubmit(e){
+    e.preventDefault();
+    if(opSelect === '' || title === '' || description === ''){
+      setAlert(true);
+    }
+    else if(props.task){
+      await api.put("task", {
+        title,
+        description,
+        icon: opSelect,
+        idTask: props.task.id
+      });
+      props.setModal(false);
+    }
+    else {
+      await api.post("task", {
+        title,
+        description,
+        icon: opSelect
+      });
+      props.setModal(false);
+    }
+  }
 
   return(
     <Container>
@@ -47,7 +71,7 @@ export default function Task(props){
         <div className="header">
           <h1>Criar Tarefa</h1>
         </div>
-        <form>
+        <form onSubmit={(e) => handleSubmit(e)}>
           <div className="icons-list">
           {icons.map(icon => (
             <label className= { opSelect === icon ? `${icon} selected` : `${icon}`}>
@@ -57,16 +81,24 @@ export default function Task(props){
                 type="radio" 
                 name="i" 
                 value={icon}
-                onChange={e => seOptSelect(e.target.value)}  
+                onChange={e => setOptSelect(e.target.value)}  
                 />
             </label>
           ))}             
           </div>
+          {
+            alert ? (
+              <p className="msg-alert">Preencha todos os campos</p>
+            ) : (
+              null
+            )
+          }
           <h2>Título:</h2>
           <input 
             className="title" 
             type="text" 
             placeholder="Titulo da tarefa"
+            value={title}
             onChange={e => setTitle(e.target.value)}
           />
           <h2>Descrição:</h2>
@@ -74,6 +106,7 @@ export default function Task(props){
             className="description" 
             type="text" 
             placeholder="Descrição" 
+            value={description}
             onChange={e => setDescription(e.target.value)}
           />
           <button>Criar</button>

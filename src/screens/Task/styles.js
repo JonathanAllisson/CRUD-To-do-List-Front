@@ -65,6 +65,15 @@ export const Container = styled.div`
       }
     }
     
+    .msg-alert {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      border: 1px solid red;
+      margin-top: 10px;
+      color: red;
+    }
+
     h2 {
       margin: 20px 5px 0px;
       color: ${props => props.theme.text};

@@ -23,7 +23,7 @@ export const Container = styled.div`
     margin: auto;
   }
 
-  button{
+  .btn-submit {
     border: 0;
     flex: 1;
     padding: 15px;
@@ -61,7 +61,7 @@ export const Container = styled.div`
             width: 30%;
             background: ${props => props.theme.primary};
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             align-items: center;
             border-radius: 4px;
 
@@ -78,11 +78,12 @@ export const Container = styled.div`
             justify-content: space-between;
             flex: 1;
 
-            p, span{
-                font-size: 22px;
+            p{
+                font-size: 20px;
                 color: ${props => props.theme.text};
             }
             span{
+                font-size: 16px;
                 color: #999;
             }
         }
@@ -95,6 +96,8 @@ export const Container = styled.div`
 
             svg{
                 font-size: 25px;
+                cursor: pointer;
+                color: ${props => props.theme.text};
             }
         }
     }
