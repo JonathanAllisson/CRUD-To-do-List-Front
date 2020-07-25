@@ -1,29 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Router } from 'react-router-dom';
+import history from './history';
 
-import GlobalStyle from './styles/global';
-import { ThemeProvider } from 'styled-components';
+import { AuthProvider} from './Context/authContext';
 
-import themes from './themes';
 
-import Home from './screens/Home';
-import Task from './screens/Task';
+import Routes from './routes';
 
 function App() {
 
-  const [theme, setTheme] = useState(false);
-
-  const toggleTheme = () => {
-    return theme === true ? themes.dark : themes.light;
-  }
-
   return (
-    <>
-      <ThemeProvider theme={toggleTheme}>
-        <GlobalStyle />
-        {/* <Home /> */}
-        <Home theme={theme} setTheme={setTheme} />
-      </ThemeProvider>
-    </>
+    <AuthProvider>
+      <Router history={history}>
+        <Routes />
+      </Router>
+    </AuthProvider>
   );
 }
 

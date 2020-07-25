@@ -36,7 +36,7 @@ export default function Task(props){
         setDescription(props.task.description);
         setOptSelect(props.task.icon);
       }
-  },[]);
+  },[props.task]);
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
@@ -74,7 +74,10 @@ export default function Task(props){
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="icons-list">
           {icons.map(icon => (
-            <label className= { opSelect === icon ? `${icon} selected` : `${icon}`}>
+            <label 
+              className= { opSelect === icon ? `${icon} selected` : `${icon}`}
+              key={icon}  
+            >
               <img src={require(`../../assets/${icon}.svg`)} alt={icon}/>
               <input
                 className="radio"

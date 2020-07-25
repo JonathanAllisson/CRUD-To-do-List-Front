@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import dateFormat from 'dateformat';
 import api from '../../services/api';
 import DarkModeToggle from 'react-dark-mode-toggle';
 
-import { FaTools, FaGamepad, FaTrash } from 'react-icons/fa'
+import { FaTools, FaTrash } from 'react-icons/fa'
 import { IoIosAdd } from 'react-icons/io'
+
+import { Context } from '../../Context/authContext';
 
 import Task from '../Task';
 
 import { Container, Screen } from './styles';
 
-export default function Home({theme, setTheme}){
+export default function Home(){
+
+  const { theme, setTheme } = useContext(Context);
 
   const [modal, setModal] = useState(false);
   const [tasks, setTasks] = useState([]);
@@ -18,7 +22,7 @@ export default function Home({theme, setTheme}){
 
   useEffect(() => {
     async function loadTasks(){
-      const listTasks = await api.get('/task');
+      const listTasks = await api.get('task');
       setTasks(listTasks.data);
     }
 
@@ -37,7 +41,11 @@ export default function Home({theme, setTheme}){
   }
 
   async function handleDelete(id){
-    await api.delete(`task${id}`);
+    try{
+      await api.delete(`task${id}`);
+    }catch(err){
+      console.log(err);
+    }
   }
 
   return(
@@ -66,7 +74,8 @@ export default function Home({theme, setTheme}){
                 <img src={require(`../../assets/${task.icon}.svg`)} alt={task.icon}/>
               </div>
               <div className="box-content">
-                  <p>{task.title}</p>
+                  <p className="title">{task.title}</p>
+                  <p className="description">{task.description}</p>
                   <span>{dateFormat(task.created_at, "dd/mm/yyyy - HH:MM")}</span>
               </div>
               <div className="box-actions">

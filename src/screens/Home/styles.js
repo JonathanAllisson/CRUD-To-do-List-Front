@@ -78,9 +78,18 @@ export const Container = styled.div`
             justify-content: space-between;
             flex: 1;
 
-            p{
+            p.title{
                 font-size: 20px;
                 color: ${props => props.theme.text};
+            }
+
+            p.description{
+                font-size: 16px;
+                color: #999;
+                max-width: 30ch;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
             span{
                 font-size: 16px;
