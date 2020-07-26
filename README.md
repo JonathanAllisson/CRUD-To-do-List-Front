@@ -9,6 +9,26 @@
     <img src="./git/todolist.gif">
 </div>
 
+### 🎲 Rodando em sua máquina
+
+```bash
+# Clone este repositório
+$ git clone <https://github.com/JonathanAllisson/CRUD-To-Do-List-Back>
+
+# Acesse a pasta do projeto no terminal/cmd
+# Vá para a pasta server
+# Instale as dependências
+$ npm install ou yarn
+
+# Execute a aplicação em modo de desenvolvimento
+$ npm run dev ou yarn dev
+
+# O servidor inciará na porta:3333 - acesse <http://localhost:3333>
+
+# Repita o processo com este repositório e acesse <http://localhost:3000>
+```
+
+
 ### 🛠 Tecnologias
 
 As seguintes ferramentas foram usadas na construção do projeto:

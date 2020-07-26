@@ -56,7 +56,7 @@ function Signin({ history }) {
                 className="Login-Error"
               />
               <button type="submit">Registrar</button>
-              <Link to="/signup">Já tenho conta, logar</Link>
+              <Link to="/signup">Criar conta</Link>
             </Form>
           </Formik>     
     </Container>
