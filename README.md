@@ -12,7 +12,7 @@
 ### 🎲 Rodando em sua máquina
 
 ```bash
-# Clone este repositório
+# Clone o repositório do backend
 $ git clone <https://github.com/JonathanAllisson/CRUD-To-Do-List-Back>
 
 # Acesse a pasta do projeto no terminal/cmd
