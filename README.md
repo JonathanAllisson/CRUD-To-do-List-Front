@@ -1,5 +1,5 @@
 <h1 align="center">To Do List</h1>
-<p align="center">Uma simples lista de tarefas feita em reactjs</p>
+<p align="center">Uma simples lista de tarefas feita em reactjs com variaçao de tema e autenticação via jwt</p>
 <h1 align="center">
     <a href="https://pt-br.reactjs.org/">🔗 React</a>
 </h1>
